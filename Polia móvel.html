@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polia móvel</title>
+<style>
+:root{--bg:#eef2f4;--panel:#fff;--ink:#14232b;--mute:#5a6b74;--line:#cfd9de;--rope:#b8731a;--steel:#7f929c;--steel2:#b5c3ca;--load:#2f6f8f;--fcol:#c0392b;--ok:#1f5f3f;--scene:#f9fbfc;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e171c;--panel:#16232a;--ink:#e6eef2;--mute:#92a5ae;--line:#2b3d46;--rope:#e0a04a;--steel:#8ea1ab;--steel2:#4a5d67;--load:#4a9bc2;--fcol:#ff7a68;--ok:#5cc98f;--scene:#111d23;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e171c;--panel:#16232a;--ink:#e6eef2;--mute:#92a5ae;--line:#2b3d46;--rope:#e0a04a;--steel:#8ea1ab;--steel2:#4a5d67;--load:#4a9bc2;--fcol:#ff7a68;--ok:#5cc98f;--scene:#111d23;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+header,main{max-width:960px;margin:0 auto;padding:16px}
+h1{margin:0;font-size:1.6rem}
+header p{margin:4px 0 0;color:var(--mute)}
+main{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:16px;padding-top:0}
+@media(max-width:760px){main{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.scene{background:var(--scene);padding:6px}
+svg{width:100%;height:auto;display:block}
+.right{display:flex;flex-direction:column;gap:16px}
+h2{font-size:1.05rem;margin:0 0 8px}
+label{display:flex;justify-content:space-between;font-weight:600;margin-top:10px}
+input[type=range]{width:100%;accent-color:var(--load);margin-top:4px}
+input:focus-visible{outline:3px solid var(--rope);outline-offset:2px}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.res div{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.res small{display:block;color:var(--mute);font-size:.85rem;line-height:1.3}
+.res b{font-size:1.35rem;font-variant-numeric:tabular-nums}
+.big b{color:var(--fcol)}
+p{margin:6px 0}
+.eq{font-family:Cambria,Georgia,serif;font-size:1.1rem}
+</style>
+</head>
+<body>
+<header>
+<h1>Polia móvel</h1>
+<p>Escolha a massa da carga e arraste o controle para puxar a corda.</p>
+</header>
+<main>
+<section class="card scene">
+<svg viewBox="0 0 440 640" role="img" aria-label="Polia móvel com carga pendurada">
+<defs><pattern id="ht" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="var(--steel)" stroke-width="2"/></pattern></defs>
+<rect x="110" y="0" width="300" height="30" fill="url(#ht)" opacity=".5"/>
+<line x1="110" y1="30" x2="410" y2="30" stroke="var(--steel)" stroke-width="3"/>
+<rect x="30" y="592" width="380" height="30" fill="url(#ht)" opacity=".5"/>
+<line x1="30" y1="592" x2="410" y2="592" stroke="var(--steel)" stroke-width="3"/>
+<line x1="170" x2="300" y1="450" y2="450" stroke="var(--mute)" stroke-dasharray="4 4"/>
+<line id="hBar" x1="130" x2="130" y1="450" y2="450" stroke="var(--ok)" stroke-width="3"/>
+<text id="hTxt" x="122" text-anchor="end" fill="var(--ok)" font-size="14"></text>
+<g transform="translate(320 70)"><circle r="30" fill="var(--steel2)" stroke="var(--steel)" stroke-width="3"/><g id="fixSp"><line x1="-24" x2="24" stroke="var(--steel)" stroke-width="3"/><line y1="-24" y2="24" stroke="var(--steel)" stroke-width="3"/></g><circle r="5" fill="var(--steel)"/></g>
+<text x="360" y="62" fill="var(--mute)" font-size="12">polia fixa</text>
+<path id="rope" fill="none" stroke="var(--rope)" stroke-width="4" stroke-linecap="round"/>
+<circle cx="230" cy="30" r="5" fill="var(--steel)"/>
+<g id="mov">
+<circle cx="260" r="30" fill="var(--steel2)" stroke="var(--steel)" stroke-width="3"/>
+<g id="movSp"><line x1="236" x2="284" stroke="var(--steel)" stroke-width="3"/><line x1="260" x2="260" y1="-24" y2="24" stroke="var(--steel)" stroke-width="3"/></g>
+<circle cx="260" r="5" fill="var(--steel)"/>
+<line x1="260" y1="0" x2="260" y2="52" stroke="var(--steel)" stroke-width="3"/>
+<rect id="blk" y="52" height="52" rx="4" fill="var(--load)"/>
+<text id="blkTxt" x="260" y="84" text-anchor="middle" fill="#fff" font-weight="700" font-size="15"></text>
+</g>
+<g id="hand"><rect x="338" y="-8" width="24" height="16" rx="4" fill="var(--rope)"/></g>
+<line id="dBar" x1="350" x2="350" y1="140" y2="140" stroke="var(--ok)" stroke-width="3"/>
+<text id="dTxt" x="400" text-anchor="end" fill="var(--ok)" font-size="14"></text>
+</svg>
+</section>
+
+<div class="right">
+<section class="card">
+<label for="m"><span>Massa da carga</span><output id="mo"></output></label>
+<input id="m" type="range" min="1" max="30" step="1" value="10">
+<label for="d"><span>Puxar a corda</span><output id="do"></output></label>
+<input id="d" type="range" min="0" max="2.6" step="0.05" value="0">
+</section>
+
+<section class="card">
+<h2>Resultados</h2>
+<div class="res">
+<div><small>Peso da carga</small><b id="rP"></b></div>
+<div class="big"><small>Força que a mão faz</small><b id="rF"></b></div>
+<div><small>Corda puxada</small><b id="rD"></b></div>
+<div><small>Altura que a carga subiu</small><b id="rH"></b></div>
+</div>
+<p style="color:var(--mute);font-size:.9rem">Considerando g = 10 m/s², sem atrito e com polia de massa desprezível.</p>
+</section>
+
+<section class="card">
+<h2>Como funciona</h2>
+<p>A corda passa por baixo da polia móvel e sustenta a carga com <b>dois lados</b>. Cada lado segura metade do peso.</p>
+<p class="eq">F = P ÷ 2</p>
+<p>Em troca, é preciso puxar <b>o dobro</b> de corda: a carga sobe 1 m quando a mão puxa 2 m.</p>
+<p class="eq">d = 2 · h</p>
+</section>
+</div>
+</main>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var Y0=450,H0=140,PX=100,G=10;
+function f(x,d){return x.toFixed(d).replace('.',',')}
+function draw(){
+var m=+$('m').value,d=+$('d').value,h=d/2,P=m*G;
+var pY=Y0-h*PX,hY=H0+d*PX;
+$('mo').textContent=f(m,0)+' kg';$('do').textContent=f(d,2)+' m';
+$('rope').setAttribute('d','M230 30 L230 '+pY+' A30 30 0 0 0 290 '+pY+' L290 70 A30 30 0 0 1 350 70 L350 '+hY);
+$('mov').setAttribute('transform','translate(0 '+pY+')');
+$('movSp').setAttribute('transform','rotate('+(-h*PX/30*57.2958)+' 260 0)');
+$('fixSp').setAttribute('transform','rotate('+(d*PX/30*57.2958)+')');
+var w=34+m*1.6;$('blk').setAttribute('x',260-w/2);$('blk').setAttribute('width',w);$('blkTxt').textContent=f(m,0)+' kg';
+$('hand').setAttribute('transform','translate(0 '+hY+')');
+$('hBar').setAttribute('y2',pY);$('hTxt').setAttribute('y',(Y0+pY)/2+5);$('hTxt').textContent=h>0.02?'h = '+f(h,2)+' m':'';
+$('dBar').setAttribute('y2',hY);$('dTxt').setAttribute('y',(H0+hY)/2+5);$('dTxt').textContent=d>0.04?'d = '+f(d,2)+' m':'';
+$('rP').textContent=f(P,0)+' N';$('rF').textContent=f(P/2,0)+' N';
+$('rD').textContent=f(d,2)+' m';$('rH').textContent=f(h,2)+' m';
+}
+$('m').addEventListener('input',draw);$('d').addEventListener('input',draw);
+draw();
+})();
+</script>
+</body>
+</html>
